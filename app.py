@@ -107,7 +107,7 @@ with tab1:
     st.plotly_chart(fig, width="stretch")
     st.write("Each customer's last six months of repayment status were counted to see "
              "how many months they were late. The more months late, the higher the default rate.")
-        table = filtered.groupby("MONTHS_LATE")["DEFAULTED"].mean() * 100
+    table = filtered.groupby("MONTHS_LATE")["DEFAULTED"].mean() * 100
     fig = px.line(x=table.index, y=table.round(1), markers=True,
                   title="Default rate by number of late months (out of 6)")
     fig.update_layout(xaxis_title="Months late", yaxis_title="Default rate (%)")
