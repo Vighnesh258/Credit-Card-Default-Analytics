@@ -102,7 +102,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(
 
 with tab1:
     st.subheader("Does a customer's repayment history show who will default?")
-        counts = filtered["default.payment.next.month"].value_counts()
+    counts = filtered["default.payment.next.month"].value_counts()
     fig = px.pie(values=counts.values, names=counts.index, hole=0.5, title="Share of customers who defaulted")
     st.plotly_chart(fig, width="stretch")
     st.write("Each customer's last six months of repayment status were counted to see "
