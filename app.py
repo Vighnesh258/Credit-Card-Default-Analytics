@@ -71,7 +71,9 @@ def default_rate_chart(data, column, title, axis_label):
     table["rate"] = (table["mean"] * 100).round(1)
     if column in ORDERS:  # put the groups in a sensible order
         table = table.reindex([g for g in ORDERS[column] if g in table.index])
-    fig = px.bar(x=table.index.astype(str), y=table["rate"], text=table["rate"], title=title)
+        fig = px.bar(x=table.index.astype(str), y=table["rate"], text=table["rate"], title=title,
+                 color=table["rate"], color_continuous_scale="Reds")
+    fig.update_coloraxes(showscale=False)  # hides the colour legend bar
     fig.update_layout(xaxis_title=axis_label, yaxis_title="Default rate (%)")
     fig.update_traces(customdata=table["size"],
                       hovertemplate="%{x}<br>Default rate: %{y}%<br>Customers: %{customdata:,}<extra></extra>")
@@ -100,10 +102,16 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(
 
 with tab1:
     st.subheader("Does a customer's repayment history show who will default?")
+        counts = filtered["default.payment.next.month"].value_counts()
+    fig = px.pie(values=counts.values, names=counts.index, hole=0.5, title="Share of customers who defaulted")
+    st.plotly_chart(fig, width="stretch")
     st.write("Each customer's last six months of repayment status were counted to see "
              "how many months they were late. The more months late, the higher the default rate.")
-    default_rate_chart(filtered, "MONTHS_LATE", "Default rate by number of late months (out of 6)",
-                       "Months late")
+        table = filtered.groupby("MONTHS_LATE")["DEFAULTED"].mean() * 100
+    fig = px.line(x=table.index, y=table.round(1), markers=True,
+                  title="Default rate by number of late months (out of 6)")
+    fig.update_layout(xaxis_title="Months late", yaxis_title="Default rate (%)")
+    st.plotly_chart(fig, width="stretch")
     st.info(f"**Insight:** customers who were never late default {rate_on_time:.1f}% of the time. "
             f"Being late even once raises that to {rate_late_once:.1f}%, so the first missed "
             "payment is the earliest warning the bank has.")
