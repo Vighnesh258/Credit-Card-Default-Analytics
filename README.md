@@ -3,7 +3,7 @@
 > **Business question:** which credit card customers are most at risk of defaulting next month, and what early signs identify them?
 > This project looks at six months of repayment history, bills, payments and customer details to find which signs separate customers who default from those who do not, then turns the findings into a simple high-risk flag the bank could use.
 
-**Live app:** https://credit-card-default578.streamlit.app/ | **Code:** https://github.com/Vighnesh258/Credit-Card-Default-Analytics | **Author:** Vighnesh & Anand| **Stack:** Python, Pandas, Plotly, Streamlit, GitHub
+**Live app:** https://credit-card-default578.streamlit.app/ | **Code:** https://github.com/Vighnesh258/Credit-Card-Default-Analytics | **Author:** Vighnesh & Anand | **Stack:** Python, Pandas, Plotly, Streamlit, GitHub
 
 ---
 
